@@ -29,12 +29,9 @@ Shader "Custom/Phong"
                 half NdotL = max(0, dot(s.Normal, lightDir));
                 half3 lightReflectDir = reflect(-lightDir, s.Normal);
                 half RdotV = max(0, dot(lightReflectDir, viewDir));
-                half3 specularity = pow(RdotV, _SpecularGloss/4)*_SpecularPower *_SpecularColor.rgb ;
+                half3 specularity = pow(RdotV, _SpecularGloss/4) * _SpecularPower *_SpecularColor.rgb ;
                 half4 c;
-                half3 lightingModel = NdotL * s.Albedo + specularity;
-                half3 attenColor = _LightColor0.rgb * atten;
-                half4 finalDiffuse = float4(lightingModel * attenColor, 1);
-                c.rgb = finalDiffuse.rgb;
+                c.rgb = (NdotL * s.Albedo + specularity) * _LightColor0.rgb * atten;
                 c.a = s.Alpha;
                 return c;
             }
