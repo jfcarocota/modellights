@@ -4,8 +4,9 @@ Shader "Custom/Phong"
     {
         _Albedo("Albedo color", Color) = (1, 1, 1, 1)
         _SpecularColor("Specular color", Color) = (1, 1, 1, 1)
-        _SpecularPower("Specular power", Range(0.0, 5.0)) = 1.0
-        _SpecularGloss("Gloss", Range(0.0, 5.0)) = 1.0
+        _SpecularPower("Specular power", Range(1.0, 5.0)) = 1.0
+        _SpecularGloss("Gloss", Range(1.0, 5.0)) = 1.0
+        _SpecularSteps("Specular Steps", Range(1, 8)) = 4
     }
 
     SubShader
@@ -23,13 +24,14 @@ Shader "Custom/Phong"
             half4 _SpecularColor;
             half _SpecularPower;
             half _SpecularGloss;
+            int _SpecularSteps;
 
             half4 LightingPhong(SurfaceOutput s, half3 lightDir, half3 viewDir, half atten)
             {
                 half NdotL = max(0, dot(s.Normal, lightDir));
                 half3 lightReflectDir = reflect(-lightDir, s.Normal);
                 half RdotV = max(0, dot(lightReflectDir, viewDir));
-                half3 specularity = pow(RdotV, _SpecularGloss/4) * _SpecularPower *_SpecularColor.rgb ;
+                half3 specularity = pow(RdotV, _SpecularGloss / _SpecularSteps) * _SpecularPower *_SpecularColor.rgb ;
                 half4 c;
                 c.rgb = (NdotL * s.Albedo + specularity) * _LightColor0.rgb * atten;
                 c.a = s.Alpha;

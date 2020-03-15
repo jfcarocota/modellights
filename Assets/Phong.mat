@@ -68,9 +68,10 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _SmoothnessTextureChannel: 0
-    - _SpecularGloss: 2.55
+    - _SpecularGloss: 5
     - _SpecularHighlights: 1
-    - _SpecularPower: 1.6
+    - _SpecularPower: 5
+    - _SpecularSteps: 3.78
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
